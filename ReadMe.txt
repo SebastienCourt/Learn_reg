@@ -1,6 +1,7 @@
 Sebastien Court, University of Innsbruck, Copyright 2023.
 
 0/ This C++ code was written for performing the numerical experiments that are presented in the following preprint: 
+https://arxiv.org/abs/2109.11658
 
 Requirements: Linux system, libraries "qhull" and "MUMPS" installed.
 
