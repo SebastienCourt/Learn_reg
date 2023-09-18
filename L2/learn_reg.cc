@@ -77,6 +77,15 @@ void matlab_export_coeff(const double coeff) {
 
 }
 
+void matlab_export_coeff2(const double coeff) {
+
+  std::ofstream evolcoeff;
+  evolcoeff.open("./MATLAB/Coeffdata_validation.txt", ios::out|ios::app);
+  evolcoeff << coeff << ",   " ;
+  evolcoeff.close();
+
+}
+
 
 void matlab_export_coefflearnedNN(const double coeff) {
 
@@ -1749,8 +1758,74 @@ int main(int argc, char *argv[]) {
   matlab_export_weights_trans(weights_trans);
 
 
+  /**************************************************************************************/
+  /************************************* VALIDATION *************************************/
+  /**************************************************************************************/
 
 
+  // New exact data
+  size_type Ndata2 = Ndata;
+  std::vector<double> utruth2(Ndata2);
+  std::ofstream coefflearnedL204;
+  coefflearnedL204.open("./MATLAB/Coeffdata_validation.txt", ios::out|ios::trunc);
+  coefflearnedL204.close();
+  for (size_type k=0; k<Ndata; ++k) {
+        utruth2[k] = 0.05 + double(k)*0.05;
+        matlab_export_coeff2(utruth2[k]);
+  }
+  std::vector<plain_vector> ydata2(Ndata2);
+  for (size_type k=0; k<Ndata2; ++k) {
+	a = utruth2[k];
+	direct_solve(mesh, mim, mf, ydata2[k], utruth2[k]); // 'ydata' is measured, from 'utruth', namely the ground truth
+
+  }
+  cout << "Validation Data generated!" << endl;
+
+  // New artificial data
+  std::ofstream coefflearnedL202;
+  coefflearnedL202.open("./MATLAB/CoefflearnedL2_validation.txt", ios::out|ios::trunc);
+  coefflearnedL202.close();
+  std::vector<double> udata2(Ndata2);
+  for (size_type k=0; k<Ndata2; ++k) {
+
+	a = utruth2[k];
+	udata2[k] = a_init;
+	subproblem_Nesterov_L2(udata2[k], ydata2[k], mesh, mim, mf, Nmax_subnesterov, step_size_nesterov, tol_subnesterov);
+
+  	//matlab_export_coeff2(udata2[k]);
+
+  		std::ofstream evolcoeffNN02;
+  		evolcoeffNN02.open("./MATLAB/CoefflearnedL2_validation.txt", ios::out|ios::app);
+  		evolcoeffNN02 << udata2[k] << ",   " ;
+  		evolcoeffNN02.close();
+
+  }
+  cout << "Validation Data output generated!" << endl;
+
+
+  // Output of the NN from these new (artificial) data
+  std::vector<double> u2(Ndata2);
+  for (size_type k=0; k<Ndata2; ++k) {
+
+        cout << "k = " << k << endl;	
+        u2[k] = a_init;
+        a = utruth2[k];
+        subproblem_Nesterov(u2[k], ydata2[k], weights, weights_trans, mesh, mim, mf, Nmax_subnesterov, step_size_nesterov, tol_subnesterov);
+
+  }
+
+  // Export the result
+  std::ofstream coefflearnedNN03;
+  coefflearnedNN03.open("./MATLAB/CoefflearnedNN_validation.txt", ios::out|ios::trunc);
+  coefflearnedNN03.close();
+  for (size_type k=0; k<Ndata2; ++k) {
+        std::ofstream evolcoeffNN032;
+        evolcoeffNN032.open("./MATLAB/CoefflearnedNN_validation.txt", ios::out|ios::app);
+        evolcoeffNN032 << u2[k] << ",   " ;
+        evolcoeffNN032.close();
+  }
+
+  cout << "Validation terminated!" << endl;
 
 
 }
