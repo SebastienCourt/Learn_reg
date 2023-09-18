@@ -22,11 +22,11 @@ Requirements: Linux system, libraries "qhull" and "MUMPS" installed.
 
 3/ Select the code "learn_reg" that you want to test:
         - either the one which tries to re-discover the L2-norm as regularizer (section 6.2 of the preprint).
-        Then copy both files located from the folder "L2" to "/getfem-5.4.2/contrib/learn_reg/"
+        Then copy both files located from the folder "L2" to "/getfem-5.3/contrib/learn_reg/"
         - or the one which trains a NN that compensates the effect of a random noise (section 6.3 of the preprint).
-        Then copy both files located from the folder "noise3" to "/getfem-5.4.2/contrib/learn_reg/"
+        Then copy both files located from the folder "noise3" to "/getfem-5.3/contrib/learn_reg/"
         - or the one which trains a multi-dimensional NN which regularizes the problem identification of several coefficients in an elliptic PDE (section 6.4 of the preprint).
-        Then copy both files located from folder "2D-codes" to "/getfem-5.4.2/contrib/learn_reg/"
+        Then copy both files located from folder "2D-codes" to "/getfem-5.3/contrib/learn_reg/"
 
 4/  Compile the code:
         4.1/ First create a "MATLAB" folder in "./getfem-5.3/contrib/learn_reg/"
