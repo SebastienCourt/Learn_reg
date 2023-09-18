@@ -25,7 +25,7 @@ Requirements: Linux system, libraries "qhull" and "MUMPS" installed.
         Then copy both files located from the folder "L2" to "/getfem-5.3/contrib/learn_reg/"
         - or the one which trains a NN that compensates the effect of a random noise (section 6.3 of the preprint).
         Then copy both files located from the folder "noise3" to "/getfem-5.3/contrib/learn_reg/"
-        - or the one which trains a multi-dimensional NN which regularizes the problem identification of several coefficients in an elliptic PDE (section 6.4 of the preprint).
+        - or the one which trains a multi-dimensional NN which regularizes the problem of identification of several coefficients in an elliptic PDE (section 6.4 of the preprint), in order to compensate the effect of a random noise.
         Then copy both files located from folder "2D-codes" to "/getfem-5.3/contrib/learn_reg/"
 
 4/  Compile the code:
